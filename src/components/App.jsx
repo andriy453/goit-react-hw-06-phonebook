@@ -7,7 +7,7 @@ import Container from './Conteiner/Conteiner';
 
 class App extends Component {
   state = {
-    contacts: [    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'}, ],
+    contacts: [     ],
     filter: '',
   };
 
