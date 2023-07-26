@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import '../../components/Filter/Filter.css';
 
-const Filter = ({ value, onChange }) => {
+const Filter = ({ value =  '', onChange }) => {
   return (
     <>
       <p className="filter-text">Find contacts by name</p>

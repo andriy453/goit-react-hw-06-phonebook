@@ -7,7 +7,7 @@ import Container from './Conteiner/Conteiner';
 
 class App extends Component {
   state = {
-    contacts: [     ],
+    contacts: [  ],
     filter: '',
   };
 
@@ -65,10 +65,16 @@ class App extends Component {
 
   render() {
     const { contacts, filter } =this.state;
-    const NomrmalizeFilter = filter.toLowerCase();
-    const VilibleTodos = contacts.filter( cont =>
-      cont.name.toLowerCase().includes(NomrmalizeFilter)
-    );
+    if(this.state.contacts){ 
+      const NomrmalizeFilter = filter.toLowerCase();
+      let VilibleTodos = contacts.filter( cont =>
+        cont.name.toLowerCase().includes(NomrmalizeFilter)
+      );
+    } 
+      let VilibleTodos = [];
+   
+    
+
     return (
       <>
         <Container>
@@ -76,7 +82,7 @@ class App extends Component {
           <ContactForm onSubmit={this.formSabmitHendler} />
           <h2>Contacts</h2>
           <Filter value={filter} onChange={this.ChangeFilter} />
-          <ContactList contacts={VilibleTodos} OnDelite={this.Delite} />
+          <ContactList contacts={VilibleTodos } OnDelite={this.Delite} />
         </Container>
       </>
     );
