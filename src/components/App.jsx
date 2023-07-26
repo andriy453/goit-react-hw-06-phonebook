@@ -7,14 +7,10 @@ import Container from './Conteiner/Conteiner';
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+
   formSabmitHendler = ({ name, number }) => {
     const contact = {
       id: nanoid(),
@@ -50,6 +46,19 @@ class App extends Component {
       contacts: prevState.contacts.filter(cont => cont.id !== todoId),
     }));
   };
+  componentDidUpdate = (prevProps, prevState) =>{
+  if(this.state.contacts !== prevState.contacts){
+ if(JSON.stringify(this.state.contacts )){
+  localStorage.setItem('contacts',JSON.stringify(this.state.contacts ))
+ }
+  }
+  }
+  componentDidMount = ()=>{
+    
+    this.setState({
+      contacts: JSON.parse( localStorage.getItem('contacts'))
+    })
+  }
 
   render() {
     const { contacts, filter } = this.state;
