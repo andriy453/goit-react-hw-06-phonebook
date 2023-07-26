@@ -7,7 +7,7 @@ import Container from './Conteiner/Conteiner';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'}, ],
     filter: '',
   };
 
@@ -46,24 +46,27 @@ class App extends Component {
       contacts: prevState.contacts.filter(cont => cont.id !== todoId),
     }));
   };
-  componentDidUpdate = (prevProps, prevState) =>{
+
+  componentDidMount () {
+    if(this.state.contacts){
+      this.setState({
+        contacts: JSON.parse( localStorage.getItem('contacts'))
+      })
+    } 
+  
+
+  }
+  componentDidUpdate (prevProps, prevState){
   if(this.state.contacts !== prevState.contacts){
- if(JSON.stringify(this.state.contacts )){
-  localStorage.setItem('contacts',JSON.stringify(this.state.contacts ))
- }
+    localStorage.setItem('contacts',JSON.stringify(this.state.contacts ))
   }
-  }
-  componentDidMount = ()=>{
-    
-    this.setState({
-      contacts: JSON.parse( localStorage.getItem('contacts'))
-    })
   }
 
+
   render() {
-    const { contacts, filter } = this.state;
+    const { contacts, filter } =this.state;
     const NomrmalizeFilter = filter.toLowerCase();
-    const VilibleTodos = contacts.filter(cont =>
+    const VilibleTodos = contacts.filter( cont =>
       cont.name.toLowerCase().includes(NomrmalizeFilter)
     );
     return (
