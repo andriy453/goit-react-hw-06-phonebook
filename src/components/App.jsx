@@ -47,34 +47,24 @@ class App extends Component {
     }));
   };
 
-  componentDidMount () {
-    if(this.state.contacts){
-      this.setState({
-        contacts: JSON.parse( localStorage.getItem('contacts'))
-      })
-    } 
-  
-
-  }
-  componentDidUpdate (prevProps, prevState){
-  if(this.state.contacts !== prevState.contacts){
-    localStorage.setItem('contacts',JSON.stringify(this.state.contacts ))
-  }
+  componentDidMount() {
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+    if (contacts) {
+      this.setState({ contacts });
+    }
   }
 
-
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
   render() {
     const { contacts, filter } =this.state;
-    if(this.state.contacts){ 
       const NomrmalizeFilter = filter.toLowerCase();
       let VilibleTodos = contacts.filter( cont =>
         cont.name.toLowerCase().includes(NomrmalizeFilter)
       );
-    } 
-      let VilibleTodos = [];
-   
-    
-
     return (
       <>
         <Container>
