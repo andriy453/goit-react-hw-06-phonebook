@@ -26,11 +26,11 @@
   border: 1px;
   border-radius: 5px;
   color: white;
-  transition:all, 500ms;
-  margin-bottom:15px ;
+  transition: all, 500ms;
+  margin-bottom: 15px;
 }
 .sabmit_contact:hover,
 .sabmit_contact:focus {
-   opacity: 1; 
-   transform: scale(1.1);
+  opacity: 1;
+  transform: scale(1.1);
 }
