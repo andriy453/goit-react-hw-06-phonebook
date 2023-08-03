@@ -1,82 +1,64 @@
 import { nanoid } from 'nanoid';
-import { Component } from 'react';
+import { useState ,useEffect } from 'react';
+
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import Container from './Conteiner/Conteiner';
 
-class App extends Component {
-  state = {
-    contacts: [  ],
-    filter: '',
+const App = ()=>{
+  const [contacts, setContacts] = useState(() => {
+    return JSON.parse(localStorage.getItem("contacts"))
+  });
+
+const [filter , setFilter ] = useState("");
+
+const formSabmitHendler = ( name, number ) => {
+  const contact = {
+    id: nanoid(),
+    name,
+    number,
   };
-
-  formSabmitHendler = ({ name, number }) => {
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    const { contacts } = this.state;
-
-    if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
-      alert(`${name} is already in contacts.`);
-    } else if (contacts.find(contact => contact.number === number)) {
-      alert(`${number} is already in contacts.`);
-    } else {
-      this.setState(({ contacts }) => ({
-        contacts: [contact, ...contacts],
-      }));
-    }
-  };
-
-  ChangeFilter = e => {
-    this.setState({
-      filter: e.currentTarget.value,
-    });
-  };
-
-  Delite = todoId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(cont => cont.id !== todoId),
-    }));
-  };
-
-  componentDidMount() {
-    const contacts = JSON.parse(localStorage.getItem('contacts'));
-    if (contacts) {
-      this.setState({ contacts });
-    }
+  if (
+    contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    )
+  ) {
+    alert(`${name} is already in contacts.`);
+  } else if (contacts.find(contact => contact.number === number)) {
+    alert(`${number} is already in contacts.`);
+  } else {
+    setContacts([contact, ...contacts]);
   }
+};
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+const ChangeFilter = e => {
+  setFilter( e.currentTarget.value)
+};
+
+const Delite = todoId => {
+  setContacts(contacts.filter((i) => i.id !== todoId));
+};                
+
+useEffect((prevState)=>{  
+    if (prevState !== contacts) {
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
     }
-  }
-  render() {
-    const { contacts, filter } =this.state;
-      const NomrmalizeFilter = filter.toLowerCase();
-      let VilibleTodos = contacts.filter( cont =>
-        cont.name.toLowerCase().includes(NomrmalizeFilter)
-      );
-    return (
-      <>
-        <Container>
-          <h1>Phonebook</h1>
-          <ContactForm onSubmit={this.formSabmitHendler} />
-          <h2>Contacts</h2>
-          <Filter value={filter} onChange={this.ChangeFilter} />
-          <ContactList contacts={VilibleTodos } OnDelite={this.Delite} />
-        </Container>
-      </>
-    );
-  }
+},[contacts])
+const NomrmalizeFilter = filter.toLowerCase();
+let VilibleTodos = contacts.filter( cont =>
+  cont.name.toLowerCase().includes(NomrmalizeFilter)
+);
+return (
+<>
+  <Container>
+    <h1>Phonebook</h1>
+    <ContactForm onSubmit={formSabmitHendler} />
+    <h2>Contacts</h2>
+    <Filter value={filter} onChange={ChangeFilter} />
+    <ContactList contacts={VilibleTodos} OnDelite={Delite} />
+  </Container>
+</>
+);
 }
-
 export default App;
