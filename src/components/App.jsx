@@ -1,4 +1,6 @@
 import { nanoid } from 'nanoid';
+import Notiflix from 'notiflix';
+
 import { useState ,useEffect } from 'react';
 
 import ContactForm from './ContactForm/ContactForm';
@@ -24,9 +26,9 @@ const formSabmitHendler = ( name, number ) => {
       contact => contact.name.toLowerCase() === name.toLowerCase()
     )
   ) {
-    alert(`${name} is already in contacts.`);
+    Notiflix.Notify.failure(`${name} is already in contacts.`);
   } else if (contacts.find(contact => contact.number === number)) {
-    alert(`${number} is already in contacts.`);
+    Notiflix.Notify.failure(`${number} is already in contacts.`);
   } else {
     setContacts([contact, ...contacts]);
   }
