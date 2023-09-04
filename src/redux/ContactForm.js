@@ -7,9 +7,24 @@ const Slice = createSlice({
   initialState: '',
   // Об'єкт редюсерів
   reducers: {
-    addTask(state, action) {},
-    deleteTask(state, action) {},
-    toggleCompleted(state, action) {},
+   formSabmitHendler( name, number ){
+      const contact = {
+        id: nanoid(),
+        name,
+        number,
+      };
+      if (
+        contacts.find(
+          contact => contact.name.toLowerCase() === name.toLowerCase()
+        )
+      ) {
+        Notiflix.Notify.failure(`${name} is already in contacts.`);
+      } else if (contacts.find(contact => contact.number === number)) {
+        Notiflix.Notify.failure(`${number} is already in contacts.`);
+      } else {
+        setContacts([contact, ...contacts]);
+      }
+    };
   },
 });
 
