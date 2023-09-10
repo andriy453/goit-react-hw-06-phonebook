@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/ContactListSlice';
 
-import '../../components/ContactForm/ContactForm.css';
+import  css from '../../components/ContactForm/ContactForm.module.css';
 
 const  ContactForm  = () => {
   const dispatch = useDispatch();
@@ -25,10 +25,10 @@ const  ContactForm  = () => {
 return (
   <div>
     <form onSubmit={handleSubmit}>
-      <label className="lable">
+      <label className={css.lable}>
         Name
         <input
-          className="contact-inp"
+          className={css.contact_inp}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -39,7 +39,7 @@ return (
       <label className="lable">
         Number
         <input
-          className="contact-inp"
+          className={css.contact_inp}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -47,7 +47,7 @@ return (
           required
         />
       </label>
-      <button className="sabmit_contact" type="sabmit">
+      <button className={css.sabmit_contact} type="sabmit">
         add contact
       </button>
     </form>
