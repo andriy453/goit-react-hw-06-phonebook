@@ -1,41 +1,34 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/ContactListSlice';
+
 import '../../components/ContactForm/ContactForm.css';
 
-const  ContactForm  = ({onSubmit}) => {
-const [name,  setName] = useState('');
-const [number,  setNumber] = useState('');
+const  ContactForm  = () => {
+  const dispatch = useDispatch();
 
- const hendelChange = (event) => {
-  const { name, value } = event.currentTarget;
- if( name === 'number' ){
-  setNumber(value);
- }
- if( name === 'name' ){
-  setName(value);
- }
-};
+  const handleSubmit = e => {
+    e.preventDefault();
 
- const hendleSabmit = event => {
-  event.preventDefault();
-  onSubmit(name,number);
-  reset();
-};
+    const newObj = {
+      id: nanoid(),
+      name: e.target.elements.name.value,
+      number: e.target.elements.number.value,
+    };
+    dispatch(addContact(newObj));
 
- const reset = () => {
-  setName('');
-  setNumber('');
-};
+    e.target.reset();
+  };
+
 
 return (
   <div>
-    <form onSubmit={hendleSabmit}>
+    <form onSubmit={handleSubmit}>
       <label className="lable">
         Name
         <input
           className="contact-inp"
-          onChange={hendelChange}
-          value={name}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -47,8 +40,6 @@ return (
         Number
         <input
           className="contact-inp"
-          onChange={hendelChange}
-          value={number}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
